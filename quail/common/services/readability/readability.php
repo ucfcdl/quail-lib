@@ -4,7 +4,7 @@
 *	@file An abstraction layer over the php-text-statistics package
 */
 
-require_once('php-text-statistics/TextStatistics.php');
+require_once('../../../../vendor/davechild/textstatistics/TextStatistics.php');
 
 
 /**

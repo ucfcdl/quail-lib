@@ -4,8 +4,8 @@ if(!file_exists('simpletest/unit_tester.php')) {
 	die('You must install simpletest [http://www.simpletest.org/] in the directory "tests".');
 }
 require_once('../quail/quail.php');
-require_once('simpletest/unit_tester.php');
-require_once('simpletest/reporter.php');
+require_once('../vendor/lastcraft/simpletest/unit_tester.php');
+require_once('../vendor/lastcraft/simpletest/reporter.php');
 require_once('cssTests.php');
 require_once('quailTests.php');
 
