@@ -24,41 +24,95 @@
 *	This is just a demonstration of what you can do with a reporter.
 */
 
-class reportStatic extends quailReporter {
-	
+class reportStatic extends quailReporter
+{
 	/**
 	*	Generates a static list of errors within a div.
 	*	@return string A fully-formatted report
 	*/
-	function getReport() {
-		$output = '';
-		foreach($this->guideline->getReport() as $testname => $test) {
-			if(count($test) > 0) {
-				$severity = $this->guideline->getSeverity($testname);
-				$translation = $this->guideline->getTranslation($testname);
-				$output .= '<div><h3>'. $translation['title'] .'</h3><div>'. $translation['description'] .'</div>';
-				if(is_array($test)) {
-					foreach($test as $k => $problem) {
-						if(is_object($problem))
-							$output .= '<p><strong>'.($k+1).'</strong><pre>'. htmlentities($problem->getHtml()) .'</pre></p>';
-						
+	function getReport()
+	{
+		$output = [];
+
+		foreach ($this->guideline->getReport() as $testname => $test) {
+			$severity    = $this->guideline->getSeverity($testname);
+			$translation = $this->guideline->getTranslation($testname);
+
+			if(isset($translation['title'])) {
+				$title = $translation['title'];
+			} else {
+				$title = NULL;
+			}
+
+			if(isset($translation['description'])) {
+				$description = $translation['description'];
+			} else {
+				$description = NULL;
+			}
+
+			switch ($severity) {
+				case QUAIL_TEST_SEVERE:
+					$severityLevel  = 'Error';
+					$severityNumber = 1;
+					break;
+				case QUAIL_TEST_MODERATE:
+					$severityLevel  = 'Warning';
+					$severityNumber = 2;
+					break;
+				case QUAIL_TEST_SUGGESTION:
+					$severityLevel  = 'Suggestion';
+					$severityNumber = 3;
+					break;
+			}
+
+			if (is_array($test)) {
+				foreach ($test as $k => $problem) {
+					$testResult           = [];
+
+					if (is_object($problem)) {
+						if ($testname === "cssTextHasContrast" || $testname === "cssTextStyleEmphasize") {
+							foreach ($problem->element->attributes as $name) {
+								if ($name->name === "style") {
+									$styleValue = $name->value;
+									$hexColors  = [];
+
+									preg_match_all("/(#[0-9a-f]{6}|#[0-9a-f]{3})/", $styleValue, $hexColors);
+
+									$hexColors = array_unique($hexColors[0]);
+								}
+							}
+
+							$testResult['colors'] = $hexColors;
+
+							if ( sizeof($hexColors) === 1 ) {
+								$testResult['fore_color'] = $hexColors[0];
+							} else {
+								$testResult['back_color'] = $hexColors[0];
+								$testResult['fore_color'] = $hexColors[1];
+							}
+						}
+
+						$testResult['text_type']	= $problem->message;
+						$testResult['type']   	= $testname;
+						$testResult['lineNo'] 	= $problem->line;
+
+						if(isset($testResult['element'])) {
+							$testResult['element'] = $problem->element->tagName;
+						}
+
+						$testResult['severity']     = $severityLevel;
+						$testResult['severity_num'] = $severityNumber;
+						$testResult['title']        = $title;
+						$testResult['description']  = $description;
+						$testResult['path']         = count($this->path) > 1 ? $this->path[1] : "None";
+						$testResult['html']	        = $problem->getHtml();
 					}
+
+					$output[] = $testResult;
 				}
-				$output .='</p>';
-				switch($severity) {
-					case QUAIL_TEST_SEVERE:
-						$output .= 'Severe error';
-						break;
-					case QUAIL_TEST_MODERATE:
-						$output .= 'Moderate error';
-						break;
-					case QUAIL_TEST_SUGGESTION:
-						$output .= 'Suggestion';
-						break;
-				}
-				$output .='</p></div>';
 			}
 		}
+
 		return $output;
 	}
 }

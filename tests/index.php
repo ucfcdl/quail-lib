@@ -4,9 +4,9 @@ if(!file_exists('simpletest/unit_tester.php')) {
 	die('You must install simpletest [http://www.simpletest.org/] in the directory "tests".');
 }
 require_once('../quail/quail.php');
-require_once('../vendor/lastcraft/simpletest/unit_tester.php');
-require_once('../vendor/lastcraft/simpletest/reporter.php');
-require_once('cssTests.php');
+require_once('simpletest/unit_tester.php');
+require_once('simpletest/reporter.php');
+//require_once('cssTests.php');
 require_once('quailTests.php');
 
 class TestOfTests extends UnitTestCase {
@@ -921,9 +921,6 @@ class TestOfTests extends UnitTestCase {
 		$this->assertTrue($results[0]->element->tagName == 'p'); 
 
 		$results = $this->getTest('82-9.html', 'pNotUsedAsHeader');
-		$this->assertTrue(count($results) == 0);
-
-		$results = $this->getTest('82-10.html', 'pNotUsedAsHeader');
 		$this->assertTrue(count($results) == 0);
 
   }
@@ -2440,7 +2437,7 @@ class TestOfTests extends UnitTestCase {
   //273 - 276 skipped
 }
 
-$tests = &new TestOfTests();
+$tests = new TestOfTests();
 $tests->run(new HtmlReporter());
 
 
