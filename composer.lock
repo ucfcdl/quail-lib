@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "95468f9b8ec49795cdcaf5a986d5a7e1",
-    "content-hash": "b212ae428b8b9cd230aa1f4f7b988031",
+    "hash": "71ec6751018b64234c5e70fe13914b5a",
+    "content-hash": "8d76e0c53f6be3e191fe5332dec8d7a4",
     "packages": [
         {
             "name": "davechild/textstatistics",
@@ -59,37 +59,14 @@
             "time": "2015-04-22 14:55:55"
         },
         {
-            "name": "lastcraft/simpletest",
+            "name": "git-mirror/simpletest",
             "version": "1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lox/simpletest.git",
-                "reference": "1c9db340b758919f16c46d496476432d94400955"
+                "url": "https://github.com/git-mirror/simpletest",
+                "reference": "master"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lox/simpletest/zipball/1c9db340b758919f16c46d496476432d94400955",
-                "reference": "1c9db340b758919f16c46d496476432d94400955",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.5"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Marcus Baker",
-                    "email": "marcus@lastcraft.com",
-                    "role": "Original project lead"
-                }
-            ],
-            "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
-            "homepage": "http://simpletest.org/",
-            "time": "2012-06-12 05:22:54"
+            "type": "library"
         }
     ],
     "packages-dev": [],
