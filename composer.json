@@ -1,0 +1,25 @@
+{
+    "name": "ucfcdl/quail-lib",
+    "description" : "This is a modified version of quail to be used within UDOIT, the Universal Design Online content Inspection Tool.",
+    "keywords": ["quail", "ucf", "accessibility"],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "git-mirror/simpletest",
+                "version": "1.1.0",
+                "source": {
+                    "url": "https://github.com/git-mirror/simpletest",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": "^5.4.0 || ^5.5.0 || ^5.6.0",
+        "davechild/textstatistics": "*",
+        "git-mirror/simpletest": "*"
+        
+    }
+}
