@@ -1,9 +1,9 @@
 <?php
 
 // include_once('../config/localConfig.php');
-	
 
-/** 
+
+/**
 *    QUAIL - QUAIL Accessibility Information Library
 *    Copyright (C) 2009 Kevin Miller
 *
@@ -1196,7 +1196,7 @@ class cssTextHasContrast extends quailColorTest
 
 				if (isset($style['font-weight'])) {
 					preg_match_all('!\d+!', $style['font-weight'], $matches);
-					
+
 					if (count($matches) > 0) {
 						if ($matches >= 700) {
 							$bold = true;
@@ -1285,7 +1285,7 @@ class cssTextStyleEmphasize extends quailColorTest
 
 				if (isset($style['font-weight'])) {
 					preg_match_all('!\d+!', $style['font-weight'], $matches);
-					
+
 					if (count($matches) > 0) {
 						if ($matches >= 700) {
 							$bold = true;
@@ -2897,7 +2897,7 @@ class noHeadings extends quailTest
 	function check()
 	{
 		global $doc_length;
-		
+
 		$elements = $this->getAllElements('p');
 
 		$document_string = "";
@@ -6284,6 +6284,48 @@ class videosEmbeddedOrLinkedNeedCaptions extends quailTest
 					$attr_val = $video->getAttribute($attr);
 					if ( preg_match($search, $attr_val) ){
 						if ($service->captionsMissing($attr_val)) {
+							$this->addReport($video);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+*	Links to YouTube videos must be available for viewing
+*/
+class videosEmbeddedOrLinkedUnavailable extends quailTest
+{
+	/**
+	*	@var int $default_severity The default severity code for this test.
+	*/
+	var $default_severity = QUAIL_TEST_SEVERE;
+
+	/**
+	*	@var array $services The services that this test will need. We're using
+	*	the youtube library.
+	*/
+	var $services = ['youtube' => 'media/youtube'];
+
+	/**
+	*	The main check function. This is called by the parent class to actually check content
+	*/
+	function check()
+	{
+		$search = '/(youtube|youtu.be)/';
+
+		foreach ($this->getAllElements(array('a', 'embed', 'iframe')) as $video) {
+			$attr = ($video->tagName == 'a')
+					 ? 'href'
+					 : 'src';
+
+			if ($video->hasAttribute($attr)) {
+				foreach ($this->services as $service) {
+					$attr_val = $video->getAttribute($attr);
+					if ( preg_match($search, $attr_val) ){
+						if ($service->videoUnavailable($attr_val)) {
 							$this->addReport($video);
 						}
 					}
