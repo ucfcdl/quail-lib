@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 *    QUAIL - QUAIL Accessibility Information Library
 *    Copyright (C) 2009 Kevin Miller
@@ -176,6 +176,7 @@ class Wcag2aaaGuideline extends quailGuideline
 		'headersHaveText',
 		'videoEmbedChecked',
 		'videosEmbeddedOrLinkedNeedCaptions',
+		'videosEmbeddedOrLinkedUnavailable',
 	];
 }
 /*@}*/
